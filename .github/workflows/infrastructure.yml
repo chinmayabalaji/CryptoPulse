@@ -3,7 +3,7 @@ name: deploy-aws-infrastructure
 on: 
     push:
         paths:
-            = 'Infrastructure/Terraform/**'
+            - 'Infrastructure/Terraform/**'
 
 jobs:
 
