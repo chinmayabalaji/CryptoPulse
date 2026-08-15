@@ -1,6 +1,9 @@
 name: deploy-aws-infrastructure
 
-on: [push]
+on: 
+    push:
+        paths:
+            = 'infrastructure/**'
 
 jobs:
 
@@ -14,4 +17,3 @@ jobs:
             - name: Run an one-line script
               run: echo "First Actions"
 
-              
