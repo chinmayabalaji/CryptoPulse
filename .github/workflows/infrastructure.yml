@@ -1,0 +1,17 @@
+name: deploy-aws-infrastructure
+
+on: [push]
+
+jobs:
+
+    build:
+
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Run an one-line script
+              run: echo "First Actions"
+
+              
