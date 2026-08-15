@@ -5,6 +5,8 @@ on:
         paths:
             - 'Infrastructure/Terraform/**'
 
+    workflow-dispatch:
+
 jobs:
 
     build:
