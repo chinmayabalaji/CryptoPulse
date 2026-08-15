@@ -5,7 +5,7 @@ on:
         paths:
             - 'Infrastructure/Terraform/**'
 
-    workflow-dispatch:
+    workflow_dispatch:
 
 jobs:
 
