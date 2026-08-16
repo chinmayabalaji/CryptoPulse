@@ -29,11 +29,14 @@ jobs:
             - name: Verify AWS Identity
               run: aws sts get-caller-identity
 
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v3  
+
             - name: Terraform Infrastructure Deployment
               run: |
                 terraform init  
                 terraform plan
-                terraform apply
+                terraform apply -auto-approve
 
             
 
