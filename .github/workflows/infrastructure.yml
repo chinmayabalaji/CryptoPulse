@@ -2,8 +2,8 @@ name: deploy-aws-infrastructure
 
 on: 
     push:
-    #     paths:
-    #         - 'Infrastructure/Terraform/**'
+        paths:
+            - 'Infrastructure/Terraform/**'
 
     workflow_dispatch:
 
