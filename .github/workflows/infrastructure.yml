@@ -33,6 +33,12 @@ jobs:
             - name: Verify AWS Identity
               run: aws sts get-caller-identity
 
+            - name: Verify Terraform files
+              run: |
+                pwd
+                ls -la
+                find . -name "*.tf"
+
             - name: Setup Terraform
               uses: hashicorp/setup-terraform@v3  
 
