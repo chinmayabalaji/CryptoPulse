@@ -1,32 +1,28 @@
 import json
-#import boto3
-from datetime import datetime
+import boto3
+import logger
 import urllib3
+from datetime import datetime
 
 def get_data():
-    print("In get_data function")
+    logger.info("Collecting Crypto Data")
     http = urllib3.PoolManager()
     params = {'search': 'python'}
     url = "https://api.coingecko.com/api/v3/exchanges"
-
-    response = http.request("GET", url, fields=params)
-
+    response = http.request("GET", url, fields = params)
     data = json.loads(response.data.decode('utf-8'))
-
-    print(data)
+    return data
 
 def load_to_s3(data):
-
+    logger.info("Loading Data to S3")
     s3_client = boto3.client('s3')
-    s3_client.put_object(Bucket = 'dev-cryptolake', key = f"Exchanges_Data_{datetime.now()}.json", Body = data )
+    s3_client.put_object(Bucket = 'dev-cryptolake', Key = f"Exchanges_Data_{datetime.now()}.json", Body = json.dumps(data), ContentType = "application/json" )
 
-def lambda_handler():
+def lambda_handler(event, context):
     try:
-        print("In main function")
+        logger.info("Starting Lambda Function")
         crypto_data = get_data()
-        print(type(crypto_data))
+        load_to_s3(crypto_data)
     except Exception as e:
         print(f"Error Encounter: str{e}")
         raise
-
-lambda_handler()
