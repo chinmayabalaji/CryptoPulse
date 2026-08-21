@@ -1,8 +1,10 @@
 import json
 import boto3
-import logger
+import logging
 import urllib3
 from datetime import datetime
+
+logger = logging.getLogger()
 
 def get_data():
     logger.info("Collecting Crypto Data")
@@ -16,7 +18,7 @@ def get_data():
 def load_to_s3(data):
     logger.info("Loading Data to S3")
     s3_client = boto3.client('s3')
-    s3_client.put_object(Bucket = 'dev-cryptolake', Key = f"Exchanges_Data_{datetime.now()}.json", Body = json.dumps(data), ContentType = "application/json" )
+    s3_client.put_object(Bucket = 'dev-cryptolake', Key = f"{datetime.now().strftime('%Y')}/{datetime.now().strftime('%m')}/{datetime.now().strftime('%d')}/Exchanges_Data_{datetime.now()}.json", Body = json.dumps(data), ContentType = "application/json" )
 
 def lambda_handler(event, context):
     try:

@@ -10,4 +10,5 @@ resource "aws_lambda_function" "lambda_function" {
     role = aws_iam_role.crypto_role.arn
     runtime = "python3.12"
     handler = "lambda_function.lambda_handler"
+    timeout = 120
 }

@@ -7,7 +7,8 @@ resource "aws_iam_role" "crypto_role" {
                 Action = "sts:AssumeRole"
                 Effect = "Allow"
                 Principal = {
-                    Service = "lambda.amazonaws.com"
+                    Service = ["lambda.amazonaws.com","scheduler.amazonaws.com"]
+                    
                 }
             },
         ]
@@ -30,6 +31,21 @@ resource "aws_iam_role_policy" "lamda_s3_policy" {
                 "s3:PutObject"
             ]
             Resource = "arn:aws:s3:::dev-cryptolake/*"
+        }]
+    })
+}
+
+resource "aws_iam_role_policy" "scheduler_lambda_policy" {
+    name = "scheduler-invoke-lambda-policy"
+    role = aws_iam_role.crypto_role.id
+    policy = jsonencode({
+        Version = "2012-10-17"
+        Statement = [{
+            Effect = "Allow"
+            Action = [
+                "lambda:InvokeFunction"
+            ]
+            Resource = aws_lambda_function.lambda_function.arn
         }]
     })
 }
