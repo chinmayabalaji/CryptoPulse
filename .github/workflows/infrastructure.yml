@@ -1,20 +1,18 @@
 name: deploy-aws-infrastructure
 
 on: 
-    push:
-        paths:
-            - 'Infrastructure/Terraform/**'
+  push:
+    paths:
+      - 'Infrastructure/Terraform/**'
 
-    workflow_dispatch:
+  workflow_dispatch:
 
 defaults:
     run:
         working-directory: Infrastructure/Terraform
 
 jobs:
-
     build:
-
         runs-on: ubuntu-latest
 
         permissions:
@@ -24,20 +22,12 @@ jobs:
         steps:
             - name: Checkout Source
               uses: actions/checkout@v4
+
             - name: Configure AWS Credentials using OIDC
               uses: aws-actions/configure-aws-credentials@v4.1.0
               with:
                 aws-region: eu-north-1
                 role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
-
-            - name: Verify AWS Identity
-              run: aws sts get-caller-identity
-
-            - name: Verify Terraform files
-              run: |
-                pwd
-                ls -la
-                find . -name "*.tf"
 
             - name: Setup Terraform
               uses: hashicorp/setup-terraform@v3  
