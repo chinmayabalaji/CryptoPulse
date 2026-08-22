@@ -22,7 +22,7 @@ resource "aws_iam_role_policy_attachment" "lambda_permissions" {
 
 resource "aws_iam_role_policy" "lamda_s3_policy" {
     name = "cryptolake-s3-policy"
-    role = aws_iam_role.crypto_role.id
+    role = aws_iam_role.crypto_role.name
     policy = jsonencode({
         Version = "2012-10-17"
         Statement = [{
@@ -37,7 +37,7 @@ resource "aws_iam_role_policy" "lamda_s3_policy" {
 
 resource "aws_iam_role_policy" "scheduler_lambda_policy" {
     name = "scheduler-invoke-lambda-policy"
-    role = aws_iam_role.crypto_role.id
+    role = aws_iam_role.crypto_role.name
     policy = jsonencode({
         Version = "2012-10-17"
         Statement = [{
