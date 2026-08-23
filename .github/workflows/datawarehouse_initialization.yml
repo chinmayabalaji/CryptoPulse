@@ -5,6 +5,7 @@ on:
         workflows: ["deploy-aws-infrastructure"]
         types:
             - completed
+    workflow_dispatch:
 
 defaults:
     run:
