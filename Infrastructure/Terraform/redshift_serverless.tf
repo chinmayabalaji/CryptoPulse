@@ -2,7 +2,7 @@ resource "aws_redshiftserverless_namespace" "crypto_redshiftserverless" {
     namespace_name = "crypto-redshiftwarehouse"
     db_name = "crypto_db"
     admin_username = "admin"
-    admin_user_password = "Chinmay@123"
+    manage_admin_password = true
     iam_roles = [aws_iam_role.crypto_role.arn]
 }
 
