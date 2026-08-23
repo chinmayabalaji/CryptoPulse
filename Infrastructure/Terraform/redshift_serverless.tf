@@ -1,0 +1,15 @@
+resource "aws_redshiftserverless_namespace" "crypto_redshiftserverless" {
+    namespace_name = "crypto-redshiftwarehouse"
+    db_name = "crypto_db"
+    admin_username = "admin"
+    admin_user_password = "Chinmay.1"
+    iam_roles = [aws_iam_role.crypto_role.arn]
+}
+
+resource "aws_redshiftserverless_workgroup" "crypto_redshiftserverless_workgroup" {
+    workgroup_name = "crypto-redshiftwarehouse-workgroup"
+    namespace_name = aws_redshiftserverless_namespace.crypto_redshiftserverless.namespace_name
+    base_capacity = 32
+    enhanced_vpc_routing = true
+    publicly_accessible = true
+}
