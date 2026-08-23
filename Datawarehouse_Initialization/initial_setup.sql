@@ -1,15 +1,15 @@
 -- Database Creation
-CREATE DATABASE IF NOT EXISTS CryptoPulse;
+CREATE DATABASE IF NOT EXISTS crypto_db;
 
 -- Schema Creation
-CREATE SCHEMA IF NOT EXISTS CryptoPulse.Bronze;
+CREATE SCHEMA IF NOT EXISTS crypto_db.Bronze;
 
-CREATE SCHEMA IF NOT EXISTS CryptoPulse.Silver;
+CREATE SCHEMA IF NOT EXISTS crypto_db.Silver;
 
-CREATE SCHEMA IF NOT EXISTS CryptoPulse.Gold;
+CREATE SCHEMA IF NOT EXISTS crypto_db.Gold;
 
 -- Table Creation
-CREATE TABLE IF NOT EXISTS CryptoPulse.Bronze.Exchanges (
+CREATE TABLE IF NOT EXISTS crypto_db.Bronze.Exchanges (
     batch_id VARCHAR(20) NOT NULL,
     id VARCHAR(50) NOT NULL,
     name VARCHAR(100) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS CryptoPulse.Bronze.Exchanges (
     timestamp TIMESTAMP default CURRENT_TIMESTAMP,
 );
 
-CREATE TABLE IF NOT EXISTS CryptoPulse.Silver.Exchanges (
+CREATE TABLE IF NOT EXISTS crypto_db.Silver.Exchanges (
     batch_id VARCHAR(20) NOT NULL,
     id VARCHAR(50) NOT NULL,
     name VARCHAR(100) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS CryptoPulse.Silver.Exchanges (
     active_flag BOOLEAN
 );
 
-CREATE TABLE IF NOT EXISTS CryptoPulse.Gold.Exchanges (
+CREATE TABLE IF NOT EXISTS crypto_db.Gold.Exchanges (
     batch_id VARCHAR(20) NOT NULL,
     id VARCHAR(50) NOT NULL,
     name VARCHAR(100) NOT NULL,

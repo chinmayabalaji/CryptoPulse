@@ -35,7 +35,6 @@ jobs:
             - name: Terraform Infrastructure Deployment
               run: |
                 terraform init
-                terraform force-unlock -force acf980f9-b322-229b-a6c7-c37cf38c0157 
                 terraform plan
                 terraform apply -auto-approve
 

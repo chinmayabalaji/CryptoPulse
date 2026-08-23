@@ -35,4 +35,4 @@ jobs:
                   --cluster-identifier ${{ secrets.REDSHIFT_CLUSTER_IDENTIFIER }} \
                   --database ${{ secrets.REDSHIFT_DATABASE }} \
                   --db-user ${{ secrets.REDSHIFT_DB_USER }} \
-                  --sql "$cat Data_Warehouse/initialize_data_warehouse.sql"
+                  --sql "$cat Datawarehouse_Initialization/initial_setup.sql"
