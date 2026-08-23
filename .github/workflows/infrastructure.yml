@@ -36,7 +36,7 @@ jobs:
               run: |
                 terraform init  
                 terraform plan
-                terraform destroy -target=aws_redshiftserverless_namespace.crypto_redshiftserverless
+                terraform destroy -target=aws_redshiftserverless_namespace.crypto_redshiftserverless -auto-approve
                 terraform apply -auto-approve
 
             
