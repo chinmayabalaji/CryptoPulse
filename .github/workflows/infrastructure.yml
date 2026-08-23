@@ -34,7 +34,7 @@ jobs:
 
             - name: Terraform Infrastructure Deployment
               run: |
-                terraform init  
+                terraform init
                 terraform plan
                 terraform apply -auto-approve
 
