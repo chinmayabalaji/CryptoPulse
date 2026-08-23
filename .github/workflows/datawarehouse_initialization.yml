@@ -1,0 +1,38 @@
+name: initialize-redshift-data-warehouse
+
+on:
+    workflow_run:
+        workflows: ["deploy-aws-infrastructure"]
+        types:
+            - completed
+
+defaults:
+    run:
+        working-directory: Data_Warehouse
+
+jobs:
+    build:
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        runs-on: ubuntu-latest
+
+        permissions:
+            id-token: write
+            contents: read
+
+        steps:
+            - name: Checkout Source
+              uses: actions/checkout@v4
+
+            - name: Configure AWS Credentials using OIDC
+              uses: aws-actions/configure-aws-credentials@v4.1.0
+              with:
+                aws-region: eu-north-1
+                role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
+
+            - name: Run Redshift Data Warehouse Initialization
+              run: |
+                aws redshift-data execute-statement \
+                  --cluster-identifier ${{ secrets.REDSHIFT_CLUSTER_IDENTIFIER }} \
+                  --database ${{ secrets.REDSHIFT_DATABASE }} \
+                  --db-user ${{ secrets.REDSHIFT_DB_USER }} \
+                  --sql "$cat Data_Warehouse/initialize_data_warehouse.sql"
