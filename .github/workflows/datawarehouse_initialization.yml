@@ -1,10 +1,9 @@
 name: initialize-redshift-data-warehouse
 
 on:
-    workflow_run:
-        workflows: ["deploy-aws-infrastructure"]
-        types:
-            - completed
+    push:
+        paths:
+            - 'Datawarehouse_Initialization/**'
     workflow_dispatch:
 
 defaults:
@@ -13,7 +12,6 @@ defaults:
 
 jobs:
     build:
-        if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
         runs-on: ubuntu-latest
 
         permissions:
@@ -33,7 +31,10 @@ jobs:
             - name: Run Redshift Data Warehouse Initialization
               run: |
                 aws redshift-data execute-statement \
-                  --cluster-identifier ${{ secrets.REDSHIFT_CLUSTER_IDENTIFIER }} \
+                  --workgroup-name ${{ secrets.REDSHIFT_WORKGROUP_NAME }} \
                   --database ${{ secrets.REDSHIFT_DATABASE }} \
                   --db-user ${{ secrets.REDSHIFT_DB_USER }} \
                   --sql "$(cat initial_setup.sql)"
+              env:
+                # ensure AWS region is set for the CLI
+                AWS_REGION: eu-north-1
