@@ -37,3 +37,20 @@ jobs:
               env:
                 # ensure AWS region is set for the CLI
                 AWS_REGION: eu-north-1
+
+            - name: Verify Redshift tables
+              run: |
+                STATEMENT_ID=$(aws redshift-data execute-statement \
+                  --workgroup-name "${{ secrets.REDSHIFT_WORKGROUP_NAME }}" \
+                  --database "${{ secrets.REDSHIFT_DATABASE }}" \
+                  --sql "SELECT schemaname, tablename FROM pg_tables WHERE schemaname NOT IN ('pg_catalog', 'information_schema');" \
+                  --query 'Id' \
+                  --output text)
+
+                aws redshift-data wait statement-finished \
+                  --id "$STATEMENT_ID"
+
+                aws redshift-data get-statement-result \
+                  --id "$STATEMENT_ID"
+              env:
+                AWS_REGION: eu-north-1
