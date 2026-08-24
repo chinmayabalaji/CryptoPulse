@@ -9,11 +9,11 @@ on:
 
 defaults:
     run:
-        working-directory: Data_Warehouse
+        working-directory: Datawarehouse_Initialization
 
 jobs:
     build:
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
         runs-on: ubuntu-latest
 
         permissions:
@@ -36,4 +36,4 @@ jobs:
                   --cluster-identifier ${{ secrets.REDSHIFT_CLUSTER_IDENTIFIER }} \
                   --database ${{ secrets.REDSHIFT_DATABASE }} \
                   --db-user ${{ secrets.REDSHIFT_DB_USER }} \
-                  --sql "$(cat Datawarehouse_Initialization/initial_setup.sql)"
+                  --sql "$(cat initial_setup.sql)"
