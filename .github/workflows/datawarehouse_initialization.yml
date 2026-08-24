@@ -33,7 +33,6 @@ jobs:
                 aws redshift-data execute-statement \
                   --workgroup-name ${{ secrets.REDSHIFT_WORKGROUP_NAME }} \
                   --database ${{ secrets.REDSHIFT_DATABASE }} \
-                  --db-user ${{ secrets.REDSHIFT_DB_USER }} \
                   --sql "$(cat initial_setup.sql)"
               env:
                 # ensure AWS region is set for the CLI
