@@ -13,3 +13,8 @@ resource "aws_redshiftserverless_workgroup" "crypto_redshiftserverless_workgroup
     enhanced_vpc_routing = true
     publicly_accessible = true
 }
+
+output "redshift_admin_secret_arn" {
+    value = aws_redshiftserverless_namespace.crypto_redshiftserverless.admin_password_secret_arn
+    sensitive = true
+}
