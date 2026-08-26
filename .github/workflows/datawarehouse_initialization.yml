@@ -44,6 +44,7 @@ jobs:
                 STATEMENT_ID=$(aws redshift-data execute-statement \
                   --workgroup-name "${{ secrets.REDSHIFT_WORKGROUP_NAME }}" \
                   --database "${{ secrets.REDSHIFT_DATABASE }}" \
+                  --secret-arn ${{ secrets.REDSHIFT_ADMIN_SECRET_ARN }} \
                   --sql "select * from information_schema.tables" \
                   --query 'Id' \
                   --output text)
