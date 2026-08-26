@@ -45,7 +45,7 @@ jobs:
                   --workgroup-name "${{ secrets.REDSHIFT_WORKGROUP_NAME }}" \
                   --database "${{ secrets.REDSHIFT_DATABASE }}" \
                   --secret-arn ${{ secrets.REDSHIFT_ADMIN_SECRET_ARN }} \
-                  --sql "select * from information_schema. where database = 'crypto_db'" \
+                  --sql "select * from information_schema.tables where database = 'crypto_db'" \
                   --query 'Id' \
                   --output text)
 
