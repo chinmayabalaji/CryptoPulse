@@ -48,7 +48,7 @@ jobs:
                   --query 'Id' \
                   --output text)
 
-                aws redshift-data wait statement-finished \
+                aws redshift-data describe-statement \
                   --id "$STATEMENT_ID"
 
                 aws redshift-data get-statement-result \
