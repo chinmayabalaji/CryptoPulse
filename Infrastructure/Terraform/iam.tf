@@ -7,7 +7,7 @@ resource "aws_iam_role" "crypto_role" {
                 Action = "sts:AssumeRole"
                 Effect = "Allow"
                 Principal = {
-                    Service = ["lambda.amazonaws.com","scheduler.amazonaws.com"]
+                    Service = ["lambda.amazonaws.com","scheduler.amazonaws.com", "redshift-serverless.amazonaws.com"]
                     
                 }
             },
@@ -48,4 +48,29 @@ resource "aws_iam_role_policy" "scheduler_lambda_policy" {
             Resource = aws_lambda_function.lambda_function.arn
         }]
     })
+}
+
+resource "aws_iam_role_policy" "redshiftserverless_policy" {
+    name = "redshiftserverless-policy"
+    role = aws_iam_role.crypto_role.id
+    policy = jsonencode({
+        Version = "2012-10-17"
+        Statement = [{
+            Effect = "Allow"
+            Action = [
+                "redshift-serverless:GetCredentials",
+                "redshift-serverless:CreateEndpointAccess",
+                "redshift-serverless:DeleteEndpointAccess",
+                "redshift-serverless:ListEndpointAccess",
+                "redshift-serverless:GetWorkgroup",
+                "redshift-serverless:ListWorkgroups"
+            ]
+            Resource = "*"
+        }]
+    })
+}
+
+resource "aws_iam_role_policy_attachment" "redshiftserverless_permissions" {
+    role = aws_iam_role.crypto_role.name
+    policy_arn = "arn:aws:iam::aws:policy/AmazonRedshiftFullAccess"
 }
